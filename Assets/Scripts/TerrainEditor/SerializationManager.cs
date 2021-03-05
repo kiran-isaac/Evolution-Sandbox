@@ -8,6 +8,8 @@ public class SerializationManager
 {
     public static bool Save(int saveSlot, object saveData)
     {
+        saveData.prep();
+
         BinaryFormatter formatter = GetBinaryFormatter();
 
         if (!Directory.Exists(Application.persistentDataPath + "/Terrain Saves"))

@@ -8,16 +8,18 @@ public class Obstacle : MonoBehaviour
 
     public Texture2D moveCursor;
 
-    SpriteRenderer render;
+    public TerrainManager terrainManager;
 
-    bool selected = false;
+    SpriteRenderer render;
 
     Vector3 lastPosition;
 
     private void Start()
     {
         render = GetComponent<SpriteRenderer>();
+        terrainManager = GameObject.Find("Ground").GetComponent<TerrainManager>();
     }
+
     private void OnMouseEnter()
     {
         Cursor.SetCursor(moveCursor, new Vector2(16, 16), CursorMode.ForceSoftware);
@@ -31,10 +33,7 @@ public class Obstacle : MonoBehaviour
     private void OnMouseDrag()
     {
         Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 delta = newPos - lastPosition;
-
-        transform.Translate(new Vector3(delta.x, delta.y));
-
-        lastPosition = new Vector3(newPos.x, newPos.y);
+        transform.position = new Vector3(newPos.x, terrainManager.GetHeightAtPoint(newPos.x) + 0.4f, 5f);
+        transform.rotation = Quaternion.Euler(0f, 0f, terrainManager.GetAngleAtPoint(newPos.x) - 90);
     }
 }

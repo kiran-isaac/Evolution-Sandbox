@@ -13,7 +13,7 @@ public class Vert : MonoBehaviour
         // Gets global coords of mouse pos
         Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        newPos.y = Mathf.Max(newPos.y, transform.parent.position.y + 1);
+        newPos.y = Mathf.Min(Mathf.Max(newPos.y, transform.parent.position.y + 1), 100);
         
         // Removes x motion
         newPos = new Vector3(transform.position.x, newPos.y, 0);

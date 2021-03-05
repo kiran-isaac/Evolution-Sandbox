@@ -22,6 +22,11 @@ public class UIManager : MonoBehaviour
     // as each are 0.2 seconds long
     float timer = 0;
 
+    private void Start()
+    {
+        terrainManager = GameObject.Find("Ground").GetComponent<TerrainManager>();
+    }
+
     public void Back()
     {
         SceneManager.LoadScene("Menu");
@@ -29,7 +34,7 @@ public class UIManager : MonoBehaviour
 
     public void AddRock()
     {
-        Instantiate(rockPrefab, Vector3.zero, Quaternion.identity, obstaclesTransform);
+        Instantiate(rockPrefab, new Vector3(0, terrainManager.GetHeightAtPoint(0) + 0.3f, 5), Quaternion.identity, obstaclesTransform);
     }
 
     // Is called when the obstacles button is clicked

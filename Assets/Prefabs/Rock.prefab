@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7528717931947010996}
   - component: {fileID: 7528717931947010999}
   - component: {fileID: 5871864644023354766}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7528717931947010998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -170,3 +170,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveCursor: {fileID: 2800000, guid: 0b4632a3bbd011142b2192f8558b7991, type: 3}
+  terrainManager: {fileID: 0}

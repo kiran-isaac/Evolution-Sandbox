@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
-using Mono.Data.Sqlite;
 using System.Linq;
 using System.IO;
 
@@ -117,6 +116,19 @@ public class TerrainManager : MonoBehaviour
 
         // Saves the data
         SerializationManager.Save(saveSlot, saveData);
+    }
+
+    public float GetHeightAtPoint(float x)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(x, 100f), Vector2.down, 150, 9);
+        return 100 - hit.distance;
+    }
+
+    public float GetAngleAtPoint(float x)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(x, 100f), Vector2.down, 150, 9);
+        float angle = Vector2.Angle(hit.normal, new Vector2(1, 0));
+        return angle;
     }
 
     // Creates the default mesh for the ground
