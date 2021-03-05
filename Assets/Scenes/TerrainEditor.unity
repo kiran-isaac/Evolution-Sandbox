@@ -514,7 +514,7 @@ GameObject:
   - component: {fileID: 570546118}
   - component: {fileID: 570546121}
   m_Layer: 5
-  m_Name: Button 1
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,7 +741,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!1 &596483695
 GameObject:
@@ -793,7 +793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -846,7 +846,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &975846739
 MonoBehaviour:
@@ -1133,7 +1133,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1590072476
 GameObject:
@@ -1231,7 +1231,7 @@ RectTransform:
   - {fileID: 19499506}
   - {fileID: 1006558081}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1271,8 +1271,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 1590072481}
   dropdownPanel: {fileID: 500285871}
-  terrainManager: {fileID: 0}
-  rockPrefab: {fileID: 7528717931947010998, guid: 9f25d040389b5dc4c97359d836d84e9d,
+  terrainManager: {fileID: 1671065457}
+  rockPrefab: {fileID: 5277333803065729135, guid: 252e11d803367dd4884378330adef588,
+    type: 3}
+  spikePrefab: {fileID: 4241389917209744276, guid: fbefcef8eeeb79945b018d0c3150b6bf,
     type: 3}
   obstaclesTransform: {fileID: 975846738}
 --- !u!224 &1606920984 stripped
@@ -1374,9 +1376,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b19eb693c7ceb4f9adfb22de33aeff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacles: []
+  obstaclesTransform: {fileID: 975846738}
   saveData:
     points: []
     obstacles: []
+  rockPrefab: {fileID: 5277333803065729135, guid: 252e11d803367dd4884378330adef588,
+    type: 3}
+  spikePrefab: {fileID: 4241389917209744276, guid: fbefcef8eeeb79945b018d0c3150b6bf,
+    type: 3}
   vertPrefab: {fileID: 7905428080526273143, guid: bc811ee051a1daf40a129e2d51993792,
     type: 3}
 --- !u!68 &1671065458
@@ -1397,75 +1405,6 @@ EdgeCollider2D:
   m_Points:
   - {x: -0.5, y: 0}
   - {x: 0.5, y: 0}
---- !u!1001 &1921943601
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.7945335
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.4250631
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010997, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7528717931947010998, guid: 9f25d040389b5dc4c97359d836d84e9d,
-        type: 3}
-      propertyPath: m_Name
-      value: Rock
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9f25d040389b5dc4c97359d836d84e9d, type: 3}
 --- !u!1 &1973371097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,7 +1474,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button 2
+  m_Text: Spike
 --- !u!222 &1973371100
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1636,7 +1575,7 @@ GameObject:
   - component: {fileID: 2137702538}
   - component: {fileID: 2137702541}
   m_Layer: 5
-  m_Name: Button 2
+  m_Name: Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1704,7 +1643,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2137702539}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1590072482}
+        m_MethodName: AddSpike
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2137702539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1773,6 +1723,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Triangle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087047120466625820, guid: 5288157dbb92efd488efc928637c411a,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087047120466625820, guid: 5288157dbb92efd488efc928637c411a,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087047120466625820, guid: 5288157dbb92efd488efc928637c411a,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7087047120466625821, guid: 5288157dbb92efd488efc928637c411a,
         type: 3}

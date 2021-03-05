@@ -32,8 +32,11 @@ public class Obstacle : MonoBehaviour
 
     public void UpdatePosAndAngle(float x)
     {
-        transform.position = new Vector3(x, terrainManager.GetHeightAtPoint(x) + 0.35f, 5f);
-        transform.rotation = Quaternion.Euler(0f, 0f, terrainManager.GetAngleAtPoint(x) - 90);
+        float angle = terrainManager.GetAngleAtPoint(x) - 90;
+
+        Vector3 newPos = new Vector3(x, terrainManager.GetHeightAtPoint(x), 5f);
+        transform.position = newPos;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     private void OnMouseDrag()

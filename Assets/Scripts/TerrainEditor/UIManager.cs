@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public TerrainManager terrainManager;
 
     public GameObject rockPrefab;
+    public GameObject spikePrefab;
 
     public Transform obstaclesTransform;
 
@@ -39,7 +40,16 @@ public class UIManager : MonoBehaviour
         Obstacle script = newObstacle.GetComponent<Obstacle>();
         terrainManager.obstacles.Add(script);
         script.UpdatePosAndAngle(newObstacle.transform.position.x);
-        script.typeCode = 0;
+        terrainManager.UpdateObstacles();
+        terrainManager.Save();
+    }
+
+    public void AddSpike()
+    {
+        GameObject newObstacle = Instantiate(spikePrefab, Vector3.zero, Quaternion.identity, obstaclesTransform);
+        Obstacle script = newObstacle.GetComponent<Obstacle>();
+        terrainManager.obstacles.Add(script);
+        script.UpdatePosAndAngle(newObstacle.transform.position.x);
         terrainManager.UpdateObstacles();
         terrainManager.Save();
     }

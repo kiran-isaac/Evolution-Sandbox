@@ -17,6 +17,7 @@ public class TerrainManager : MonoBehaviour
     public TerrainSaveData saveData;
 
     public GameObject rockPrefab;
+    public GameObject spikePrefab;
 
     GameObject[] obstaclePrefabs;
 
@@ -46,7 +47,7 @@ public class TerrainManager : MonoBehaviour
             saveSlot = menuManager.saveSlot;
             newSim = menuManager.newSim;
 
-            Destroy(menuData);
+            Destroy (menuData);
         }
         catch
         {
@@ -65,9 +66,10 @@ public class TerrainManager : MonoBehaviour
 
         col = GetComponent<EdgeCollider2D>();
 
-        obstaclePrefabs = new GameObject[1]
+        obstaclePrefabs = new GameObject[2]
         {
-            rockPrefab
+            rockPrefab,
+            spikePrefab
         };
 
         if (newSim)
