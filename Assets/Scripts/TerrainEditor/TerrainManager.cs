@@ -16,8 +16,8 @@ public class TerrainManager : MonoBehaviour
 
     public GameObject vertPrefab;
 
-    public int groundSize = 10000;
-    public int groundRes = 2;
+    int groundSize = 10000;
+    int groundRes = 2;
 
     Mesh mesh;
 
@@ -71,7 +71,7 @@ public class TerrainManager : MonoBehaviour
     }
 
     // Updates the edge collider so it is on the top of the ground
-    void UpdateEdgeCollider()
+    public void UpdateEdgeCollider()
     {
         // As EdgeCollider2D requires Vector2s, the verticies list must be iterated
         // through and every second vertex is added to topEdgeVerts, which stores the 
@@ -90,8 +90,6 @@ public class TerrainManager : MonoBehaviour
     // Updates the mesh with the new verticies and triangles
     void UpdateMesh()
     {
-        AddTriangles();
-
         mesh.Clear();
         mesh.vertices = verticies;
         mesh.triangles = triangles;
@@ -126,7 +124,6 @@ public class TerrainManager : MonoBehaviour
     {
         // The temporary lists are converted back into arrays
         verticies = HeightsToVerts(Enumerable.Repeat(1.0f, groundSize / groundRes + 1).ToArray());
-
         Save();
     }
 
@@ -203,6 +200,7 @@ public class TerrainManager : MonoBehaviour
         }
 
         verticies = HeightsToVerts(data.points);
+        AddTriangles();
         UpdateMesh();
     }
 
@@ -215,6 +213,5 @@ public class TerrainManager : MonoBehaviour
         verticies[i] = newPoint;
 
         UpdateMesh();
-        UpdateEdgeCollider();
     }
 }

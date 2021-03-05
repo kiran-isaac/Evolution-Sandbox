@@ -28,5 +28,6 @@ public class Vert : MonoBehaviour
     private void OnMouseUp()
     {
         groundManager.Save();
+        groundManager.UpdateEdgeCollider();
     }
 }

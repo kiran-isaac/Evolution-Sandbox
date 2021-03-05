@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject dropdownPanel;
 
+    public TerrainManager terrainManager;
+
     public GameObject rockPrefab;
 
     public Transform obstaclesTransform;
