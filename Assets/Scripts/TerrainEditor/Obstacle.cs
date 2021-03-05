@@ -4,25 +4,13 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    public Texture2D moveCursor;
-
     public int typeCode;
 
     public TerrainManager terrainManager;
 
-    SpriteRenderer render;
-
-    Vector3 lastPosition;
-
     private void Awake()
     {
-        render = GetComponent<SpriteRenderer>();
         terrainManager = GameObject.Find("Ground").GetComponent<TerrainManager>();
-    }
-
-    private void OnMouseEnter()
-    {
-        Cursor.SetCursor(moveCursor, new Vector2(16, 16), CursorMode.ForceSoftware);
     }
 
     private void OnMouseExit()

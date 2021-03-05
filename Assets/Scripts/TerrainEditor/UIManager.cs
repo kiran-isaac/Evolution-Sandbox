@@ -36,9 +36,10 @@ public class UIManager : MonoBehaviour
 
     public void AddRock()
     {
-        GameObject newObstacle = Instantiate(rockPrefab, Vector3.zero, Quaternion.identity, obstaclesTransform);
-        Obstacle script = newObstacle.GetComponent<Obstacle>();
+        GameObject newObstacle = Instantiate(rockPrefab, Camera.main.transform.position, Quaternion.identity, obstaclesTransform);
+        Obstacle script = newObstacle.AddComponent<Obstacle>();
         terrainManager.obstacles.Add(script);
+        script.typeCode = 0;
         script.UpdatePosAndAngle(newObstacle.transform.position.x);
         terrainManager.UpdateObstacles();
         terrainManager.Save();
@@ -46,12 +47,19 @@ public class UIManager : MonoBehaviour
 
     public void AddSpike()
     {
-        GameObject newObstacle = Instantiate(spikePrefab, Vector3.zero, Quaternion.identity, obstaclesTransform);
-        Obstacle script = newObstacle.GetComponent<Obstacle>();
+        GameObject newObstacle = Instantiate(spikePrefab, Camera.main.transform.position, Quaternion.identity, obstaclesTransform);
+        Obstacle script = newObstacle.AddComponent<Obstacle>();
         terrainManager.obstacles.Add(script);
+        script.typeCode = 1;
         script.UpdatePosAndAngle(newObstacle.transform.position.x);
         terrainManager.UpdateObstacles();
         terrainManager.Save();
+    }
+
+    // Is called when the "Start Simulation" button is pressed
+    public void StartSimulation()
+    {
+        SceneManager.LoadScene("Simulation");
     }
 
     // Is called when the obstacles button is clicked

@@ -9,8 +9,6 @@ using System.IO;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class TerrainManager : MonoBehaviour
 {
-    public SerializationManager groundSave;
-
     public List<Obstacle> obstacles = new List<Obstacle>();
     public Transform obstaclesTransform;
 
@@ -18,6 +16,8 @@ public class TerrainManager : MonoBehaviour
 
     public GameObject rockPrefab;
     public GameObject spikePrefab;
+
+    public Texture2D movePointer;
 
     GameObject[] obstaclePrefabs;
 
@@ -36,32 +36,14 @@ public class TerrainManager : MonoBehaviour
     int saveSlot = 1;
     bool newSim = false;
 
-    private void Awake()
-    {
-        GameObject menuData = GameObject.Find("MainMenuData");
-
-        try
-        {
-            MainMenuManager menuManager = menuData.GetComponent<MainMenuManager>();
-
-            saveSlot = menuManager.saveSlot;
-            newSim = menuManager.newSim;
-
-            Destroy (menuData);
-        }
-        catch
-        {
-            saveSlot = 1;
-            newSim = false;
-        }
-    }
-
     void Start()
     {
+        saveSlot = PlayerPrefs.GetInt("SaveSlot");
+        newSim = PlayerPrefs.GetInt("newSim") == 1;
+
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
-        groundSave = new SerializationManager();
         saveData = new TerrainSaveData();
 
         col = GetComponent<EdgeCollider2D>();
@@ -78,9 +60,6 @@ public class TerrainManager : MonoBehaviour
         }
 
         LoadTerrain();
-
-        UpdateEdgeCollider();
-        UpdateMesh();
     }
 
     // Updates the edge collider so it is on the top of the ground
@@ -229,7 +208,7 @@ public class TerrainManager : MonoBehaviour
             int typeCode = (int)loadObstacles[i];
             float x = loadObstacles[i + 1];
             GameObject newObstacle = Instantiate(obstaclePrefabs[typeCode], new Vector3(x, 0, 5), Quaternion.identity, obstaclesTransform);
-            Obstacle script = newObstacle.GetComponent<Obstacle>();
+            Obstacle script = newObstacle.AddComponent<Obstacle>();
             obstacles.Add(script);
         }
 

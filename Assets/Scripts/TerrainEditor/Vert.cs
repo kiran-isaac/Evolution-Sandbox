@@ -8,6 +8,11 @@ public class Vert : MonoBehaviour
 
     public TerrainManager terrainManager;
 
+    private void Awake()
+    {
+        terrainManager = GameObject.Find("Ground").GetComponent<TerrainManager>();
+    }
+
     private void OnMouseDrag()
     {
         // Gets global coords of mouse pos

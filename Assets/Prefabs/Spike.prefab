@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5611408450433080954}
-  - component: {fileID: 592281441763000117}
   - component: {fileID: 7188108921585789191}
   m_Layer: 9
   m_Name: Spike
@@ -26,28 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4241389917209744276}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 5}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7326403195246962740}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &592281441763000117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4241389917209744276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7d4ae6cc2cc15c468cba562be79b12f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveCursor: {fileID: 2800000, guid: 0b4632a3bbd011142b2192f8558b7991, type: 3}
-  typeCode: 1
-  terrainManager: {fileID: 0}
 --- !u!60 &7188108921585789191
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -11,18 +11,15 @@ public class MainMenuManager : MonoBehaviour
 
     public GameObject confirmPanel;
 
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
     public void OnNewSimulation()
     {
+        PlayerPrefs.SetInt("newSim", 1);
         newSim = true;
     }
 
     public void OnLoadSimulation()
     {
+        PlayerPrefs.SetInt("newSim", 0);
         newSim = false;
     }
 
@@ -33,6 +30,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnSlot(int i)
     {
+        PlayerPrefs.SetInt("SaveSlot", i);
         saveSlot = i;
 
         if (newSim && 
