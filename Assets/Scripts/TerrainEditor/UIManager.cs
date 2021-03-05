@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class UIManager : MonoBehaviour
     // Makes sure the buttons are not pressed while the animations are still playing, 
     // as each are 0.2 seconds long
     float timer = 0;
+
+    public void Back()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 
     public void AddRock()
     {

@@ -6,7 +6,7 @@ public class Vert : MonoBehaviour
 {
     public int pointLockIndex;
 
-    public GroundGenerator groundGenerator;
+    public TerrainManager groundManager;
 
     private void OnMouseDrag()
     {
@@ -22,11 +22,11 @@ public class Vert : MonoBehaviour
         transform.position = newPos;
 
         // Updates terrain to match
-        groundGenerator.UpdatePoint(pointLockIndex, newPos);
+        groundManager.UpdatePoint(pointLockIndex, newPos);
     }
 
     private void OnMouseUp()
     {
-        groundGenerator.UpdateDB();
+        groundManager.Save();
     }
 }
