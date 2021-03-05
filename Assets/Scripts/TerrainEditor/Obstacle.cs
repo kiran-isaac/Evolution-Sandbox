@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    // Unity with github test
-
     public Texture2D moveCursor;
+
+    public int typeCode;
 
     public TerrainManager terrainManager;
 
@@ -14,7 +14,7 @@ public class Obstacle : MonoBehaviour
 
     Vector3 lastPosition;
 
-    private void Start()
+    private void Awake()
     {
         render = GetComponent<SpriteRenderer>();
         terrainManager = GameObject.Find("Ground").GetComponent<TerrainManager>();
@@ -30,10 +30,20 @@ public class Obstacle : MonoBehaviour
         Cursor.SetCursor(null, Vector2.zero, CursorMode.ForceSoftware);
     }
 
+    public void UpdatePosAndAngle(float x)
+    {
+        transform.position = new Vector3(x, terrainManager.GetHeightAtPoint(x) + 0.35f, 5f);
+        transform.rotation = Quaternion.Euler(0f, 0f, terrainManager.GetAngleAtPoint(x) - 90);
+    }
+
     private void OnMouseDrag()
     {
         Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(newPos.x, terrainManager.GetHeightAtPoint(newPos.x) + 0.4f, 5f);
-        transform.rotation = Quaternion.Euler(0f, 0f, terrainManager.GetAngleAtPoint(newPos.x) - 90);
+        UpdatePosAndAngle(newPos.x);
+    }
+
+    private void OnMouseUp()
+    {
+        terrainManager.Save();
     }
 }

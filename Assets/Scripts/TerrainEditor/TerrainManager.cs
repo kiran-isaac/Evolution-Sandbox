@@ -11,7 +11,14 @@ public class TerrainManager : MonoBehaviour
 {
     public SerializationManager groundSave;
 
+    public List<Obstacle> obstacles = new List<Obstacle>();
+    public Transform obstaclesTransform;
+
     public TerrainSaveData saveData;
+
+    public GameObject rockPrefab;
+
+    GameObject[] obstaclePrefabs;
 
     public GameObject vertPrefab;
 
@@ -57,6 +64,11 @@ public class TerrainManager : MonoBehaviour
         saveData = new TerrainSaveData();
 
         col = GetComponent<EdgeCollider2D>();
+
+        obstaclePrefabs = new GameObject[1]
+        {
+            rockPrefab
+        };
 
         if (newSim)
         {
@@ -113,6 +125,7 @@ public class TerrainManager : MonoBehaviour
     public void Save()
     {
         saveData.points = VertsToHeights();
+        UpdateObstacles();
 
         // Saves the data
         SerializationManager.Save(saveSlot, saveData);
@@ -169,7 +182,7 @@ public class TerrainManager : MonoBehaviour
             newVert.transform.position = new Vector3(i, heights[j] + transform.position.y, 0);
             Vert newVertScript = newVert.GetComponent<Vert>();
             newVertScript.pointLockIndex = tempVerticies.Count - 1;
-            newVertScript.groundManager = this;
+            newVertScript.terrainManager = this;
 
             tempVerticies.Add(new Vector3(i, -1));
 
@@ -196,11 +209,6 @@ public class TerrainManager : MonoBehaviour
         return heights.ToArray();
     }
 
-    private void OnValidate()
-    {
-        
-    }
-
     public void LoadTerrain()
     {
         TerrainSaveData data = (TerrainSaveData)SerializationManager.Load(saveSlot);
@@ -212,8 +220,39 @@ public class TerrainManager : MonoBehaviour
         }
 
         verticies = HeightsToVerts(data.points);
+
+        float[] loadObstacles = data.obstacles;
+        for (int i = 0; i < loadObstacles.Length; i += 2)
+        {
+            int typeCode = (int)loadObstacles[i];
+            float x = loadObstacles[i + 1];
+            GameObject newObstacle = Instantiate(obstaclePrefabs[typeCode], new Vector3(x, 0, 5), Quaternion.identity, obstaclesTransform);
+            Obstacle script = newObstacle.GetComponent<Obstacle>();
+            obstacles.Add(script);
+        }
+
         AddTriangles();
         UpdateMesh();
+        UpdateEdgeCollider();
+
+        foreach (Obstacle obstacle in obstacles)
+        {
+            obstacle.UpdatePosAndAngle(obstacle.gameObject.transform.position.x);
+        }
+    }
+
+    public void UpdateObstacles()
+    {
+        var obstaclesList = new List<float>();
+
+        foreach (Obstacle obstacle in obstacles)
+        {
+            obstacle.UpdatePosAndAngle(obstacle.gameObject.transform.position.x);
+            obstaclesList.Add(obstacle.typeCode);
+            obstaclesList.Add(obstacle.transform.position.x);
+        }
+
+        saveData.obstacles = obstaclesList.ToArray();
     }
 
     public void UpdatePoint(int i, Vector3 newPoint)
@@ -225,5 +264,8 @@ public class TerrainManager : MonoBehaviour
         verticies[i] = newPoint;
 
         UpdateMesh();
+
+        UpdateEdgeCollider();
+        UpdateObstacles();
     }
 }

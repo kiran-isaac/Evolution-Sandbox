@@ -29,12 +29,19 @@ public class UIManager : MonoBehaviour
 
     public void Back()
     {
+        terrainManager.Save();
         SceneManager.LoadScene("Menu");
     }
 
     public void AddRock()
     {
-        Instantiate(rockPrefab, new Vector3(0, terrainManager.GetHeightAtPoint(0) + 0.3f, 5), Quaternion.identity, obstaclesTransform);
+        GameObject newObstacle = Instantiate(rockPrefab, Vector3.zero, Quaternion.identity, obstaclesTransform);
+        Obstacle script = newObstacle.GetComponent<Obstacle>();
+        terrainManager.obstacles.Add(script);
+        script.UpdatePosAndAngle(newObstacle.transform.position.x);
+        script.typeCode = 0;
+        terrainManager.UpdateObstacles();
+        terrainManager.Save();
     }
 
     // Is called when the obstacles button is clicked
