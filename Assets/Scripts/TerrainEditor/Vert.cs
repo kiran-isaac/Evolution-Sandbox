@@ -6,11 +6,11 @@ public class Vert : MonoBehaviour
 {
     public int pointLockIndex;
 
-    public TerrainManager terrainManager;
+    public TerrainEditor terrainManager;
 
     private void Awake()
     {
-        terrainManager = GameObject.Find("Ground").GetComponent<TerrainManager>();
+        terrainManager = GameObject.Find("Ground").GetComponent<TerrainEditor>();
     }
 
     private void OnMouseDrag()

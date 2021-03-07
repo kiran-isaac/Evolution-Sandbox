@@ -6,11 +6,11 @@ public class Obstacle : MonoBehaviour
 {
     public int typeCode;
 
-    public TerrainManager terrainManager;
+    public TerrainEditor terrainEditor;
 
     private void Awake()
     {
-        terrainManager = GameObject.Find("Ground").GetComponent<TerrainManager>();
+        terrainEditor = GameObject.Find("Ground").GetComponent<TerrainEditor>();
     }
 
     private void OnMouseExit()
@@ -20,21 +20,32 @@ public class Obstacle : MonoBehaviour
 
     public void UpdatePosAndAngle(float x)
     {
-        float angle = terrainManager.GetAngleAtPoint(x) - 90;
+        float angle = terrainEditor.GetAngleAtPoint(x) - 90;
 
-        Vector3 newPos = new Vector3(x, terrainManager.GetHeightAtPoint(x), 5f);
+        Vector3 newPos = new Vector3(x, terrainEditor.GetHeightAtPoint(x), 5f);
         transform.position = newPos;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     private void OnMouseDrag()
     {
-        Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        UpdatePosAndAngle(newPos.x);
+        if (terrainEditor.editMode == "Move")
+        {
+            Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UpdatePosAndAngle(newPos.x);
+        }
     }
 
     private void OnMouseUp()
     {
-        terrainManager.Save();
+        terrainEditor.Save();
+    }
+
+    private void OnMouseDown()
+    {
+        if (terrainEditor.editMode == "Delete")
+        {
+            terrainEditor.DeleteObstacle(this);
+        }
     }
 }

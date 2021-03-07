@@ -138,7 +138,8 @@ public class SimTerrain : MonoBehaviour
     // Returns the height of the ground at x in world coords
     public float GetHeightAtPoint(float x)
     {
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(x, 101f), Vector2.down, 150, 9);
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(x, 101f), Vector2.down, 150, 11);
+
         return 101 - hit.distance;
     }
 

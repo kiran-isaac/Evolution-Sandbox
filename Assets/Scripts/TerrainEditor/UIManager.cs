@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -10,10 +11,13 @@ public class UIManager : MonoBehaviour
 
     public GameObject dropdownPanel;
 
-    public TerrainManager terrainManager;
+    public TerrainEditor terrainEditor;
 
     public GameObject rockPrefab;
     public GameObject spikePrefab;
+
+    public GameObject move;
+    public GameObject bin;
 
     public Transform obstaclesTransform;
 
@@ -25,12 +29,32 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        terrainManager = GameObject.Find("Ground").GetComponent<TerrainManager>();
+        terrainEditor = GameObject.Find("Ground").GetComponent<TerrainEditor>();
+
+        terrainEditor.editMode = "Move";
+
+        move.GetComponent<Image>().color = Color.gray;
+    }
+
+    public void OnMove()
+    {
+        terrainEditor.editMode = "Move";
+
+        move.GetComponent<Image>().color = Color.grey;
+        bin.GetComponent<Image>().color = Color.white;
+    }
+
+    public void OnBin()
+    {
+        terrainEditor.editMode = "Delete";
+
+        bin.GetComponent<Image>().color = Color.gray;
+        move.GetComponent<Image>().color = Color.white;
     }
 
     public void Back()
     {
-        terrainManager.Save();
+        terrainEditor.Save();
         SceneManager.LoadScene("Menu");
     }
 
@@ -38,22 +62,22 @@ public class UIManager : MonoBehaviour
     {
         GameObject newObstacle = Instantiate(rockPrefab, Camera.main.transform.position, Quaternion.identity, obstaclesTransform);
         Obstacle script = newObstacle.AddComponent<Obstacle>();
-        terrainManager.obstacles.Add(script);
+        terrainEditor.obstacles.Add(script);
         script.typeCode = 0;
         script.UpdatePosAndAngle(newObstacle.transform.position.x);
-        terrainManager.UpdateObstacles();
-        terrainManager.Save();
+        terrainEditor.UpdateObstacles();
+        terrainEditor.Save();
     }
 
     public void AddSpike()
     {
         GameObject newObstacle = Instantiate(spikePrefab, Camera.main.transform.position, Quaternion.identity, obstaclesTransform);
         Obstacle script = newObstacle.AddComponent<Obstacle>();
-        terrainManager.obstacles.Add(script);
+        terrainEditor.obstacles.Add(script);
         script.typeCode = 1;
         script.UpdatePosAndAngle(newObstacle.transform.position.x);
-        terrainManager.UpdateObstacles();
-        terrainManager.Save();
+        terrainEditor.UpdateObstacles();
+        terrainEditor.Save();
     }
 
     // Is called when the "Start Simulation" button is pressed

@@ -7,12 +7,14 @@ using System.Linq;
 using System.IO;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class TerrainManager : MonoBehaviour
+public class TerrainEditor : MonoBehaviour
 {
     public List<Obstacle> obstacles = new List<Obstacle>();
     public Transform obstaclesTransform;
 
     public TerrainSaveData saveData;
+
+    public string editMode = "Move";
 
     public GameObject rockPrefab;
     public GameObject spikePrefab;
@@ -209,6 +211,7 @@ public class TerrainManager : MonoBehaviour
             float x = loadObstacles[i + 1];
             GameObject newObstacle = Instantiate(obstaclePrefabs[typeCode], new Vector3(x, 0, 5), Quaternion.identity, obstaclesTransform);
             Obstacle script = newObstacle.AddComponent<Obstacle>();
+            script.typeCode = typeCode;
             obstacles.Add(script);
         }
 
@@ -220,6 +223,12 @@ public class TerrainManager : MonoBehaviour
         {
             obstacle.UpdatePosAndAngle(obstacle.gameObject.transform.position.x);
         }
+    }
+
+    public void DeleteObstacle(Obstacle obstacle)
+    {
+        obstacles.Remove(obstacle);
+        Destroy(obstacle.gameObject);
     }
 
     public void UpdateObstacles()
