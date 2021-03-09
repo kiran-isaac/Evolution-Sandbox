@@ -1356,6 +1356,8 @@ MonoBehaviour:
     type: 3}
   spikePrefab: {fileID: 4241389917209744276, guid: fbefcef8eeeb79945b018d0c3150b6bf,
     type: 3}
+  move: {fileID: 1391150327}
+  bin: {fileID: 2005985102}
   obstaclesTransform: {fileID: 975846738}
 --- !u!1 &1649677275
 GameObject:
@@ -1869,7 +1871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5286845, g: 0.5235849, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:

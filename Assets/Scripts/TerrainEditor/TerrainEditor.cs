@@ -229,6 +229,7 @@ public class TerrainEditor : MonoBehaviour
     {
         obstacles.Remove(obstacle);
         Destroy(obstacle.gameObject);
+        Save();
     }
 
     public void UpdateObstacles()
