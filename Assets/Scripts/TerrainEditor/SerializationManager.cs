@@ -8,7 +8,7 @@ public class SerializationManager
 {
     public static bool Save(int saveSlot, object saveData)
     {
-        BinaryFormatter formatter = GetBinaryFormatter();
+        BinaryFormatter formatter = new BinaryFormatter();
 
         if (!Directory.Exists(Application.persistentDataPath + "/Terrain Saves"))
         {
@@ -35,7 +35,7 @@ public class SerializationManager
             return null;
         }
 
-        BinaryFormatter formatter = GetBinaryFormatter();
+        BinaryFormatter formatter = new BinaryFormatter();
 
         FileStream file = File.Open(path, FileMode.Open);
 
@@ -51,12 +51,5 @@ public class SerializationManager
             file.Close();
             return null;
         }
-    }
-
-    public static BinaryFormatter GetBinaryFormatter()
-    {
-        BinaryFormatter formatter = new BinaryFormatter();
-
-        return formatter;
     }
 }

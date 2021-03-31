@@ -6,11 +6,11 @@ public class Vert : MonoBehaviour
 {
     public int pointLockIndex;
 
-    public TerrainEditor terrainManager;
+    public Terrain terrain;
 
     private void Awake()
     {
-        terrainManager = GameObject.Find("Ground").GetComponent<TerrainEditor>();
+        terrain = GameObject.Find("Ground").GetComponent<Terrain>();
     }
 
     private void OnMouseDrag()
@@ -27,14 +27,14 @@ public class Vert : MonoBehaviour
         transform.position = newPos;
 
         // Updates terrain to match
-        terrainManager.UpdatePoint(pointLockIndex, newPos);
+        terrain.UpdatePoint(pointLockIndex, newPos);
     }
 
     private void OnMouseUp()
     {
-        terrainManager.UpdateEdgeCollider();
-        terrainManager.UpdateObstacles();
+        terrain.UpdateEdgeCollider();
+        terrain.UpdateObstacles();
 
-        terrainManager.Save();
+        terrain.Save();
     }
 }
