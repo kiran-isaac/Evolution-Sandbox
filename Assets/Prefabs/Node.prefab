@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5814046940268332826}
   - component: {fileID: 5814046940268332825}
   - component: {fileID: 5814046940268332824}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,6 +50,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -113,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 450225360be294d479e0f9f863479ef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
 --- !u!50 &5814046940268332824
 Rigidbody2D:
   serializedVersion: 4
@@ -144,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5814046940794420228}
   - component: {fileID: 5814046940794420229}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,6 +182,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

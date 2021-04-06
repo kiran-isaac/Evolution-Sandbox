@@ -6,15 +6,25 @@ using UnityEditor;
 public class SimulationManager : MonoBehaviour
 {
     public GameObject nodePrefab;
+    public GameObject musclePrefab;
 
-    public void Test()
+    public int n;
+    public int m;
+
+    public void GenerateTestCreature()
     {
-        Instantiate(nodePrefab, new Vector3(-0.5f, 5, 0), Quaternion.identity, transform);
+        Creature.Generate(n, m, nodePrefab, musclePrefab);
+    }
+
+    private void OnValidate()
+    {
+        n = Mathf.Max(Mathf.Min(n, 10), 2);
+        m = Mathf.Min(Mathf.Max(m, n - 1), (n * (n - 1)) / 2);
     }
 }
 
 [CustomEditor(typeof(SimulationManager))]
-class TestSimEditor : Editor
+class SimEditor : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -22,9 +32,9 @@ class TestSimEditor : Editor
 
         SimulationManager simManager = (SimulationManager)target;
 
-        if (GUILayout.Button("Generate N Test Creatures"))
+        if (GUILayout.Button("Generate Test Creature"))
         {
-            simManager.Test();
+            simManager.GenerateTestCreature();
         }
     }
 }
