@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    float mass;
 
-    // Update is called once per frame
-    void Update()
+    GameObject parent;
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.layer == 10)
+        {
+            // parent.Kill();
+        }
     }
 }

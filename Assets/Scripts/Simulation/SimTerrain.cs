@@ -156,12 +156,6 @@ public class SimTerrain : MonoBehaviour
     {
         List<Vector3> tempVerticies = new List<Vector3>();
 
-        // Deletes all Vert gameobjects
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
-
         int j = 0;
         for (int i = -groundSize / 2; i <= groundSize / 2; i += groundRes)
         {
