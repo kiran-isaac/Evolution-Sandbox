@@ -8,12 +8,14 @@ public class SimulationManager : MonoBehaviour
     public GameObject nodePrefab;
     public GameObject musclePrefab;
 
+    public SimTerrain ground;
+
     public int n;
     public int m;
 
     public void GenerateTestCreature()
     {
-        Creature.Generate(n, m, nodePrefab, musclePrefab);
+        Creature.Generate(n, m, nodePrefab, musclePrefab, ground.GetHeightAtPoint(0) + 6);
     }
 
     private void OnValidate()

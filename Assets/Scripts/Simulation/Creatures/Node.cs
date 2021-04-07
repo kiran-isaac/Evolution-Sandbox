@@ -5,7 +5,12 @@ public class Node : MonoBehaviour
 {
     public int id;
 
+    public float mass;
+
     public List<Node> connections = new List<Node>();
+
+    Rigidbody2D rb;
+    CircleCollider2D col;
 
     Creature parent;
 
@@ -34,8 +39,16 @@ public class Node : MonoBehaviour
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<CircleCollider2D>();
         renderer = gameObject.GetComponent<SpriteRenderer>();
         parent = transform.parent.gameObject.GetComponent<Creature>();
+
+        mass = Random.Range(0.01f, 0.05f);
+        float scale = Mathf.Sqrt((mass*100) / (Mathf.PI));
+        transform.localScale = new Vector3(scale, scale, 1);
+        rb.mass = mass;
+        //col.sharedMaterial.bounciness = Random.Range(0f, 5f);
     }
 
     private void Update()

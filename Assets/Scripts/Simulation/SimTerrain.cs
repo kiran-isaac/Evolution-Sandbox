@@ -11,6 +11,7 @@ public class SimTerrain : MonoBehaviour
     public GameObject rockPrefab;
     public GameObject spikePrefab;
     public Transform obstaclesTransform;
+    public GameObject flagPrefab;
 
     GameObject[] obstaclePrefabs;
     List<SimObstacle> obstacles = new List<SimObstacle>();
@@ -44,8 +45,6 @@ public class SimTerrain : MonoBehaviour
         LoadTerrain();
     }
 
-    public GameObject flagPrefab;
-
     public void GenerateFlags()
     {
         while (transform.childCount != 0)
@@ -58,7 +57,7 @@ public class SimTerrain : MonoBehaviour
 
         for (int x = -groundSize / 2; x < groundSize / 2; x += 5)
         {
-            GameObject flag = Instantiate(flagPrefab, new Vector3(x, GetHeightAtPoint(x)), Quaternion.identity, transform);
+            GameObject flag = Instantiate(flagPrefab, new Vector3(x, GetHeightAtPoint(x), 5), Quaternion.identity, transform);
             GameObject dist = flag.transform.GetChild(2).gameObject;
             TextMeshPro text = dist.GetComponent<TextMeshPro>();
             text.SetText(x.ToString() + "m");

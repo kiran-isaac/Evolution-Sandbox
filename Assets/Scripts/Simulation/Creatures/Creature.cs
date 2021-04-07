@@ -3,38 +3,31 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
+    public static SimSave simSave = new SimSave();
+
     public List<Node> nodes;
     public List<Muscle> muscles;
 
     public bool isVisible = true;
 
-    int n;
-    int m;
-
-    public float fitness;
-
-    public void Setup(int n, int m)
-    {
-        this.n = n;
-        this.m = m;
-    }
-
-    public float AvgX()
-    {
-        float xSum = 0;
-        foreach (Node node in nodes)
-        {
-            xSum += node.gameObject.transform.position.x;
+    public float Fitness {
+        get {
+            float xSum = 0;
+            foreach (Node node in nodes)
+            {
+                xSum += node.gameObject.transform.position.x;
+            }
+            return xSum / nodes.Count;
         }
-        return xSum / nodes.Count;
     }
 
-    private void Update()
+    void Save()
     {
-        fitness = AvgX();
+        Debug.Log(Application.persistentDataPath);
+        simSave.AddCreature(this);
     }
 
-    public void GenerateNodes(GameObject nodePrefab)
+    void GenerateNodes(int n, GameObject nodePrefab)
     {
         nodes = new List<Node>();
 
@@ -52,7 +45,7 @@ public class Creature : MonoBehaviour
         }
     }
 
-    public void GenerateMuscles(GameObject musclePrefab)
+    void GenerateMuscles(int m, GameObject musclePrefab)
     {
         muscles = new List<Muscle>();
 
@@ -124,18 +117,17 @@ public class Creature : MonoBehaviour
         }
     }
 
-    public static void Generate(int n, int m, GameObject nodePrefab, GameObject musclePrefab)
+    public static void Generate(int n, int m, GameObject nodePrefab, GameObject musclePrefab, float height)
     {
-        GameObject newCreature = new GameObject("Creature");
-        newCreature.transform.position = newCreature.transform.position;
-        newCreature.transform.parent = GameObject.Find("SimulationManager").transform;
+        Creature creature = new GameObject("Creature").AddComponent<Creature>();
+        creature.gameObject.transform.parent = GameObject.Find("SimulationManager").transform;
 
-        Creature creature = newCreature.AddComponent<Creature>();
+        creature.GenerateNodes(n, nodePrefab);
 
-        creature.Setup(n, m);
+        creature.GenerateMuscles(m, musclePrefab);
 
-        creature.GenerateNodes(nodePrefab);
+        creature.Save();
 
-        creature.GenerateMuscles(musclePrefab);    
+        creature.transform.position = new Vector3(0, height, 0);
     }
 }
