@@ -67,7 +67,7 @@ public class SimTerrain : MonoBehaviour
     // Loads the data from the appropriate save slot file
     public void LoadTerrain()
     {
-        TerrainSaveData data = (TerrainSaveData)SerializationManager.Load(saveSlot);
+        TerrainSaveData data = (TerrainSaveData)SerializationManager.Load("/Terrain Saves/saveslot" + saveSlot.ToString() + ".trn");
 
         verticies = HeightsToVerts(data.points);
 

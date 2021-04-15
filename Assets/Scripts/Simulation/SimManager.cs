@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class SimulationManager : MonoBehaviour
+public class SimManager : MonoBehaviour
 {
     public GameObject nodePrefab;
     public GameObject musclePrefab;
@@ -25,14 +25,14 @@ public class SimulationManager : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(SimulationManager))]
+[CustomEditor(typeof(SimManager))]
 class SimEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        SimulationManager simManager = (SimulationManager)target;
+        SimManager simManager = (SimManager)target;
 
         if (GUILayout.Button("Generate Test Creature"))
         {

@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Node : MonoBehaviour
 {
+    public SaveNode saveForm;
+
     public int id;
 
     public float mass;
@@ -10,12 +13,10 @@ public class Node : MonoBehaviour
     public List<Node> connections = new List<Node>();
 
     Rigidbody2D rb;
+
     CircleCollider2D col;
 
     Creature parent;
-
-    public float start_x;
-    public float start_y;
 
     private float RandRange = 2;
 
@@ -23,8 +24,8 @@ public class Node : MonoBehaviour
 
     public GameObject CreateRandomChildNode(GameObject nodePrefab)
     {
-        GameObject node = Instantiate(nodePrefab, new Vector3(Random.Range(-RandRange, RandRange),
-            Random.Range(-RandRange, RandRange), 0), Quaternion.identity, transform.parent.transform);
+        GameObject node = Instantiate(nodePrefab, new Vector3(UnityEngine.Random.Range(-RandRange, RandRange),
+            UnityEngine.Random.Range(-RandRange, RandRange), 0), Quaternion.identity, transform.parent.transform);
 
         return node;
     }
@@ -48,7 +49,11 @@ public class Node : MonoBehaviour
         float scale = Mathf.Sqrt((mass*100) / (Mathf.PI));
         transform.localScale = new Vector3(scale, scale, 1);
         rb.mass = mass;
-        //col.sharedMaterial.bounciness = Random.Range(0f, 5f);
+    }
+
+    public void GenerateSaveFormat()
+    {
+        saveForm = new SaveNode(new float[2] { transform.position.x, transform.position.y }, mass, id, connections);
     }
 
     private void Update()
@@ -61,5 +66,23 @@ public class Node : MonoBehaviour
         {
             renderer.enabled = false;
         }
+    }
+}
+
+[System.Serializable]
+public class SaveNode
+{
+    float[] pos = new float[2];
+    float mass;
+    int id;
+    int[] connections;
+
+    public SaveNode(float[] pos, float mass, int id, List<Node> connections)
+    {
+        this.pos = pos;
+        this.mass = mass;
+        this.id = id;
+
+        this.connections = (from connection in connections select connection.id).ToArray();
     }
 }

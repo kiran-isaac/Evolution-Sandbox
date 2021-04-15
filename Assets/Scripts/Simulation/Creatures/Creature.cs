@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
-    public static SimSave simSave = new SimSave();
+    static SimSave simSave = new SimSave();
 
     public List<Node> nodes;
     public List<Muscle> muscles;
@@ -19,12 +19,6 @@ public class Creature : MonoBehaviour
             }
             return xSum / nodes.Count;
         }
-    }
-
-    void Save()
-    {
-        Debug.Log(Application.persistentDataPath);
-        simSave.AddCreature(this);
     }
 
     void GenerateNodes(int n, GameObject nodePrefab)
@@ -48,19 +42,18 @@ public class Creature : MonoBehaviour
     void GenerateMuscles(int m, GameObject musclePrefab)
     {
         muscles = new List<Muscle>();
-
         List<Node> nodeTree = new List<Node>();
 
-        List<Node> unselected = new List<Node>(); ;
+        List<Node> unconnected = new List<Node>(); ;
 
         foreach (Node n in nodes)
         {
-            unselected.Add(n);
+            unconnected.Add(n);
         }
 
-        Node node = unselected[0];
+        Node node = unconnected[0];
         nodeTree.Add(node);
-        unselected.Remove(node);
+        unconnected.Remove(node);
 
         int musclesToCreate = m;
 
@@ -69,18 +62,17 @@ public class Creature : MonoBehaviour
             int randomNodePos = Random.Range(0, nodeTree.Count);
             Node n1 = nodeTree[randomNodePos];
 
-            randomNodePos = Random.Range(0, unselected.Count);
-            Node n2 = unselected[randomNodePos];
-            unselected.Remove(n2);
+            randomNodePos = Random.Range(0, unconnected.Count);
+            Node n2 = unconnected[randomNodePos];
+            unconnected.Remove(n2);
             nodeTree.Add(n2);
 
-            GameObject muscle = Instantiate(musclePrefab, transform);
-            Muscle muscleScript = muscle.GetComponent<Muscle>();
-            muscleScript.Connect(n1.gameObject, n2.gameObject);
+            Muscle muscle = Instantiate(musclePrefab, transform).GetComponent<Muscle>();
+            muscle.Connect(n1.gameObject, n2.gameObject);
 
             musclesToCreate -= 1;
         }
-        while (unselected.Count > 0);
+        while (unconnected.Count > 0);
 
 
         for (int i = 0; i < musclesToCreate; i++)
@@ -111,13 +103,12 @@ public class Creature : MonoBehaviour
                 n2 = nodes[rnd2];
             }
 
-            GameObject muscle = Instantiate(musclePrefab, transform);
-            Muscle muscleScript = muscle.GetComponent<Muscle>();
-            muscleScript.Connect(n1.gameObject, n2.gameObject);
+            Muscle muscle = Instantiate(musclePrefab, transform).GetComponent<Muscle>();
+            muscle.Connect(n1.gameObject, n2.gameObject);
         }
     }
 
-    public static void Generate(int n, int m, GameObject nodePrefab, GameObject musclePrefab, float height)
+    public static Creature Generate(int n, int m, GameObject nodePrefab, GameObject musclePrefab, float height)
     {
         Creature creature = new GameObject("Creature").AddComponent<Creature>();
         creature.gameObject.transform.parent = GameObject.Find("SimulationManager").transform;
@@ -126,8 +117,13 @@ public class Creature : MonoBehaviour
 
         creature.GenerateMuscles(m, musclePrefab);
 
-        creature.Save();
+        foreach (Node node in creature.nodes)
+        {
+            node.GenerateSaveFormat();
+        }
 
         creature.transform.position = new Vector3(0, height, 0);
+
+        return creature;
     }
 }

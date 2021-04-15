@@ -5,16 +5,16 @@ public class Muscle : MonoBehaviour
     public float defaultLength;
     public float deviation = 1;
 
-    private GameObject n1;
-    private GameObject n2;
+    GameObject n1;
+    GameObject n2;
 
-    private bool connected = false;
+    bool connected = false;
 
-    private SpringJoint2D joint;
+    SpringJoint2D joint;
 
-    private float currentScale;
+    float currentScale;
 
-    private float t;
+    float t;
 
     LineRenderer lr;
 
@@ -69,7 +69,7 @@ public class Muscle : MonoBehaviour
     {
         if (connected)
         {
-            t += 0.05f;
+            t += Time.deltaTime;
             UpdateXScale(t);
             transform.localScale = new Vector3(currentScale, transform.localScale.y, transform.localScale.z);
             UpdateJointLength();
@@ -77,14 +77,8 @@ public class Muscle : MonoBehaviour
         }
 
         Creature parent = transform.parent.gameObject.GetComponent<Creature>();
-        if (parent.isVisible)
-        {
-            lr.enabled = true;
-        }
-        else
-        {
-            lr.enabled = false;
-        }
+
+        lr.enabled = parent.isVisible;
     }
 
     private void Start()

@@ -111,7 +111,7 @@ public class TerrainEditor : MonoBehaviour
         UpdateObstacles();
 
         // Saves the data
-        SerializationManager.Save(saveSlot, saveData);
+        SerializationManager.Save("/Terrain Saves", "saveslot" + saveSlot.ToString() + ".trn", saveData);
     }
 
     public float GetHeightAtPoint(float x)
@@ -194,12 +194,12 @@ public class TerrainEditor : MonoBehaviour
 
     public void LoadTerrain()
     {
-        TerrainSaveData data = (TerrainSaveData)SerializationManager.Load(saveSlot);
+        TerrainSaveData data = (TerrainSaveData)SerializationManager.Load("/Terrain Saves/saveslot" + saveSlot.ToString() + ".trn");
 
         if (data == null)
         {
             SaveDefaultMesh();
-            data = (TerrainSaveData)SerializationManager.Load(saveSlot);
+            data = (TerrainSaveData)SerializationManager.Load("/Terrain Saves/saveslot" + saveSlot.ToString());
         }
 
         verticies = HeightsToVerts(data.points);

@@ -4,16 +4,18 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SerializationManager
 {
-    public static bool Save(int saveSlot, object saveData)
+    public static bool Save(string path, string filename, object saveData)
     {
-        BinaryFormatter formatter = GetBinaryFormatter();
+        BinaryFormatter formatter = new BinaryFormatter();
 
-        if (!Directory.Exists(Application.persistentDataPath + "/Terrain Saves"))
+        path = Application.persistentDataPath + path;
+
+        if (!Directory.Exists(path))
         {
-            Directory.CreateDirectory(Application.persistentDataPath + "/Terrain Saves");
+            Directory.CreateDirectory(path);
         }
 
-        string path = Application.persistentDataPath + "/Terrain Saves/" + "saveslot" + saveSlot.ToString() + ".trn";
+        path = Path.Combine(path, filename);
 
         FileStream file = File.Create(path);
 
@@ -24,16 +26,16 @@ public class SerializationManager
         return true;
     }
 
-    public static object Load(int saveSlot)
+    public static object Load(string path)
     {
-        string path = Application.persistentDataPath + "/Terrain Saves/" + "saveslot" + saveSlot.ToString() + ".trn";
+        path = Application.persistentDataPath + path;
 
         if (!File.Exists(path))
         {
             return null;
         }
 
-        BinaryFormatter formatter = GetBinaryFormatter();
+        BinaryFormatter formatter = new BinaryFormatter();
 
         FileStream file = File.Open(path, FileMode.Open);
 
@@ -49,12 +51,5 @@ public class SerializationManager
             file.Close();
             return null;
         }
-    }
-
-    public static BinaryFormatter GetBinaryFormatter()
-    {
-        BinaryFormatter formatter = new BinaryFormatter();
-
-        return formatter;
     }
 }

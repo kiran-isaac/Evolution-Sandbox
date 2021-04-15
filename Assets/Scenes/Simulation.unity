@@ -157,8 +157,8 @@ MonoBehaviour:
   musclePrefab: {fileID: 7810309262878636361, guid: 12bac027f84afd5409d4d210c2a9f025,
     type: 3}
   ground: {fileID: 4969609963760952565}
-  n: 2
-  m: 1
+  n: 3
+  m: 3
 --- !u!4 &103790797
 Transform:
   m_ObjectHideFlags: 0
