@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.IO;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class TerrainEditor : MonoBehaviour

@@ -26,8 +26,9 @@ public class CameraControls : MonoBehaviour
 
             transform.Translate(-new Vector3(delta.x * vel, delta.y * vel));
 
-            // Makes it so the camera can't go below 0
-            transform.position = new Vector3(transform.position.x, Mathf.Max(-1, transform.position.y), -10);
+            // Makes it so the camera can't go below 0 or above 100
+            transform.position = new Vector3(transform.position.x, 
+                Mathf.Min(Mathf.Max(-1, transform.position.y), 100), -10);
 
             lastPosition = newPos;
         }
