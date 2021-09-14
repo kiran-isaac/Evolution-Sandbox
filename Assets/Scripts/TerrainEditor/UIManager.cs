@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        terrainEditor = GameObject.Find("Ground").GetComponent<TerrainEditor>();
+        terrainEditor = GameObject.Find("TerrainEditor").GetComponent<TerrainEditor>();
 
         terrainEditor.editMode = "Move";
 
@@ -54,30 +54,18 @@ public class UIManager : MonoBehaviour
 
     public void Back()
     {
-        terrainEditor.Save();
+        terrainEditor.terrain.Save();
         SceneManager.LoadScene("Menu");
     }
 
     public void AddRock()
     {
-        GameObject newObstacle = Instantiate(rockPrefab, Camera.main.transform.position, Quaternion.identity, obstaclesTransform);
-        Obstacle script = newObstacle.AddComponent<Obstacle>();
-        terrainEditor.obstacles.Add(script);
-        script.typeCode = 0;
-        script.UpdatePosAndAngle(newObstacle.transform.position.x);
-        terrainEditor.UpdateObstacles();
-        terrainEditor.Save();
+        terrainEditor.AddObstacle(0);
     }
 
     public void AddSpike()
     {
-        GameObject newObstacle = Instantiate(spikePrefab, Camera.main.transform.position, Quaternion.identity, obstaclesTransform);
-        Obstacle script = newObstacle.AddComponent<Obstacle>();
-        terrainEditor.obstacles.Add(script);
-        script.typeCode = 1;
-        script.UpdatePosAndAngle(newObstacle.transform.position.x);
-        terrainEditor.UpdateObstacles();
-        terrainEditor.Save();
+        terrainEditor.AddObstacle(1);
     }
 
     // Is called when the "Start Simulation" button is pressed

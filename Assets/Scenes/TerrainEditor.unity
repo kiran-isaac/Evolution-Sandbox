@@ -772,11 +772,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 975846737}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 1671065456}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!850595691 &1078781150
 LightingSettings:
@@ -1775,7 +1775,7 @@ GameObject:
   - component: {fileID: 1671065458}
   - component: {fileID: 1671065457}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1840,7 +1840,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 975846738}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1853,22 +1854,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1671065453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08b19eb693c7ceb4f9adfb22de33aeff, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e2130e9ab064f0a8eeb63869130f5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacles: []
+  obstaclePrefabs:
+  - {fileID: 5277333803065729135, guid: 252e11d803367dd4884378330adef588, type: 3}
+  - {fileID: 4241389917209744276, guid: fbefcef8eeeb79945b018d0c3150b6bf, type: 3}
   obstaclesTransform: {fileID: 975846738}
+  vertPrefab: {fileID: 7905428080526273143, guid: bc811ee051a1daf40a129e2d51993792,
+    type: 3}
   saveData:
     points: []
     obstacles: []
-  editMode: 
-  rockPrefab: {fileID: 5277333803065729135, guid: 252e11d803367dd4884378330adef588,
-    type: 3}
-  spikePrefab: {fileID: 4241389917209744276, guid: fbefcef8eeeb79945b018d0c3150b6bf,
-    type: 3}
-  movePointer: {fileID: 2800000, guid: 0b4632a3bbd011142b2192f8558b7991, type: 3}
-  vertPrefab: {fileID: 7905428080526273143, guid: bc811ee051a1daf40a129e2d51993792,
-    type: 3}
 --- !u!68 &1671065458
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -1972,6 +1969,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770418612}
   m_CullTransparentMesh: 0
+--- !u!1 &1898208413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1898208415}
+  - component: {fileID: 1898208414}
+  m_Layer: 0
+  m_Name: TerrainEditor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1898208414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898208413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b19eb693c7ceb4f9adfb22de33aeff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrain: {fileID: 1671065457}
+  editMode: Move
+--- !u!4 &1898208415
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898208413}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1973371097
 GameObject:
   m_ObjectHideFlags: 0
