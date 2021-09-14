@@ -5,7 +5,7 @@ using System.Linq;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class TerrainEditor : MonoBehaviour
 {
-    public List<Obstacle> obstacles = new List<Obstacle>();
+    
     public Transform obstaclesTransform;
 
     public TerrainSaveData saveData;
@@ -17,42 +17,42 @@ public class TerrainEditor : MonoBehaviour
 
     public Texture2D movePointer;
 
-    GameObject[] obstaclePrefabs;
+    GameObject[] _obstaclePrefabs;
 
     public GameObject vertPrefab;
 
     int groundSize = 10000;
     int groundRes = 2;
 
-    Mesh mesh;
+    Mesh _mesh;
 
-    Vector3[] verticies;
-    int[] triangles;
+    Vector3[] _vertices;
+    int[] _triangles;
 
-    EdgeCollider2D col;
+    EdgeCollider2D _col;
 
-    int saveSlot = 1;
-    bool newSim = false;
+    int _saveSlot = 1;
+    bool _newSim = false;
 
-    void Start()
+    private void Start()
     {
-        saveSlot = PlayerPrefs.GetInt("SaveSlot");
-        newSim = PlayerPrefs.GetInt("newSim") == 1;
+        _saveSlot = PlayerPrefs.GetInt("SaveSlot");
+        _newSim = PlayerPrefs.GetInt("newSim") == 1;
 
-        mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = mesh;
+        _mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = _mesh;
 
         saveData = new TerrainSaveData();
 
-        col = GetComponent<EdgeCollider2D>();
+        _col = GetComponent<EdgeCollider2D>();
 
-        obstaclePrefabs = new GameObject[2]
+        _obstaclePrefabs = new GameObject[2]
         {
             rockPrefab,
             spikePrefab
         };
 
-        if (newSim)
+        if (_newSim)
         {
             SaveDefaultMesh();
         }
@@ -63,32 +63,32 @@ public class TerrainEditor : MonoBehaviour
     // Updates the edge collider so it is on the top of the ground
     public void UpdateEdgeCollider()
     {
-        // As EdgeCollider2D requires Vector2s, the verticies list must be iterated
+        // As EdgeCollider2D requires Vector2s, the vertices list must be iterated
         // through and every second vertex is added to topEdgeVerts, which stores the 
-        // verticies on the top
+        // vertices on the top
 
         var topEdgeVerts = new List<Vector2>();
 
-        for (int i = 0; i < verticies.Length; i += 2)
+        for (int i = 0; i < _vertices.Length; i += 2)
         {
-            topEdgeVerts.Add(new Vector2(verticies[i].x, verticies[i].y));
+            topEdgeVerts.Add(new Vector2(_vertices[i].x, _vertices[i].y));
         }
 
-        col.points = topEdgeVerts.ToArray();
+        _col.points = topEdgeVerts.ToArray();
     }
 
-    // Updates the mesh with the new verticies and triangles
-    void UpdateMesh()
+    // Updates the mesh with the new vertices and triangles
+    private void UpdateMesh()
     {
-        mesh.Clear();
-        mesh.vertices = verticies;
-        mesh.triangles = triangles;
+        _mesh.Clear();
+        _mesh.vertices = _vertices;
+        _mesh.triangles = _triangles;
     }
 
-    void AddTriangles()
+    private void AddTriangles()
     {
         List<int> tempTriangles = new List<int>();
-        for (int i = 0; i < verticies.Length - 2; i += 2)
+        for (int i = 0; i < _vertices.Length - 2; i += 2)
         {
             tempTriangles.Add(i + 0);
             tempTriangles.Add(i + 2);
@@ -98,7 +98,7 @@ public class TerrainEditor : MonoBehaviour
             tempTriangles.Add(i + 3);
         }
 
-        triangles = tempTriangles.ToArray();
+        _triangles = tempTriangles.ToArray();
     }
 
     public void Save()
@@ -107,7 +107,7 @@ public class TerrainEditor : MonoBehaviour
         UpdateObstacles();
 
         // Saves the data
-        SerializationManager.Save("/Terrain Saves", "saveslot" + saveSlot.ToString() + ".trn", saveData);
+        SerializationManager.Save("/Terrain Saves", "saveslot" + _saveSlot.ToString() + ".trn", saveData);
     }
 
     public float GetHeightAtPoint(float x)
@@ -127,17 +127,15 @@ public class TerrainEditor : MonoBehaviour
     void SaveDefaultMesh()
     {
         // The temporary lists are converted back into arrays
-        verticies = HeightsToVerts(Enumerable.Repeat(1.0f, groundSize / groundRes + 1).ToArray());
+        _vertices = HeightsToVerts(Enumerable.Repeat(1.0f, groundSize / groundRes + 1).ToArray());
         Save();
     }
 
     Vector3[] HeightsToVerts(float[] heights)
     {
-        List<Vector3> tempVerticies = new List<Vector3>();
+        List<Vector3> tempVertices = new List<Vector3>();
 
-        GameObject newVert;
-
-        // Deletes all Vert gameobjects
+        // Deletes all Vert gameObjects
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
@@ -148,7 +146,7 @@ public class TerrainEditor : MonoBehaviour
         {
             try
             {
-                tempVerticies.Add(new Vector3(i, heights[j]));
+                tempVertices.Add(new Vector3(i, heights[j]));
             }
             catch
             {
@@ -157,25 +155,25 @@ public class TerrainEditor : MonoBehaviour
             }
 
             // Creates the vertex 
-            newVert = Instantiate(vertPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
+            var newVert = Instantiate(vertPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
             newVert.transform.position = new Vector3(i, heights[j] + transform.position.y, 0);
-            Vert newVertScript = newVert.GetComponent<Vert>();
-            newVertScript.pointLockIndex = tempVerticies.Count - 1;
+            var newVertScript = newVert.GetComponent<Vert>();
+            newVertScript.pointLockIndex = tempVertices.Count - 1;
             newVertScript.terrainManager = this;
 
-            tempVerticies.Add(new Vector3(i, -1));
+            tempVertices.Add(new Vector3(i, -1));
 
             j++;
         }
 
-        return tempVerticies.ToArray();
+        return tempVertices.ToArray();
     }
 
     float[] VertsToHeights()
     {
         var heights = new List<float>();
 
-        foreach (Vector3 vert in verticies)
+        foreach (Vector3 vert in _vertices)
         {
             if (vert.y == -1)
             {
@@ -188,25 +186,25 @@ public class TerrainEditor : MonoBehaviour
         return heights.ToArray();
     }
 
-    public void LoadTerrain()
+    private void LoadTerrain()
     {
-        TerrainSaveData data = (TerrainSaveData)SerializationManager.Load("/Terrain Saves/saveslot" + saveSlot.ToString() + ".trn");
+        TerrainSaveData data = (TerrainSaveData)SerializationManager.Load("/Terrain Saves/saveslot" + _saveSlot.ToString() + ".trn");
 
         if (data == null)
         {
             SaveDefaultMesh();
-            data = (TerrainSaveData)SerializationManager.Load("/Terrain Saves/saveslot" + saveSlot.ToString());
+            data = (TerrainSaveData)SerializationManager.Load("/Terrain Saves/saveslot" + _saveSlot.ToString());
         }
 
-        verticies = HeightsToVerts(data.points);
+        _vertices = HeightsToVerts(data.points);
 
-        float[] loadObstacles = data.obstacles;
-        for (int i = 0; i < loadObstacles.Length; i += 2)
+        var loadObstacles = data.obstacles;
+        for (var i = 0; i < loadObstacles.Length; i += 2)
         {
-            int typeCode = (int)loadObstacles[i];
-            float x = loadObstacles[i + 1];
-            GameObject newObstacle = Instantiate(obstaclePrefabs[typeCode], new Vector3(x, 0, 5), Quaternion.identity, obstaclesTransform);
-            Obstacle script = newObstacle.AddComponent<Obstacle>();
+            var typeCode = (int)loadObstacles[i];
+            var x = loadObstacles[i + 1];
+            var newObstacle = Instantiate(_obstaclePrefabs[typeCode], new Vector3(x, 0, 5), Quaternion.identity, obstaclesTransform);
+            var script = newObstacle.AddComponent<Obstacle>();
             script.typeCode = typeCode;
             obstacles.Add(script);
         }
@@ -215,7 +213,7 @@ public class TerrainEditor : MonoBehaviour
         UpdateMesh();
         UpdateEdgeCollider();
 
-        foreach (Obstacle obstacle in obstacles)
+        foreach (var obstacle in obstacles)
         {
             obstacle.UpdatePosAndAngle(obstacle.gameObject.transform.position.x);
         }
@@ -232,7 +230,7 @@ public class TerrainEditor : MonoBehaviour
     {
         var obstaclesList = new List<float>();
 
-        foreach (Obstacle obstacle in obstacles)
+        foreach (var obstacle in obstacles)
         {
             obstacle.UpdatePosAndAngle(obstacle.gameObject.transform.position.x);
             obstaclesList.Add(obstacle.typeCode);
@@ -248,7 +246,7 @@ public class TerrainEditor : MonoBehaviour
         newPoint = transform.InverseTransformPoint(newPoint);
 
         // Changes the point
-        verticies[i] = newPoint;
+        _vertices[i] = newPoint;
 
         UpdateMesh();
 

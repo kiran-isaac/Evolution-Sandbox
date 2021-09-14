@@ -1,29 +1,32 @@
-﻿using UnityEngine;
-using TMPro;
+﻿using TMPro;
+using UnityEngine;
 
-public class CreateFlags : MonoBehaviour
+namespace Simulation
 {
-    public GameObject flagPrefab;
-
-
-
-    public void GenerateFlags()
+    public class CreateFlags : MonoBehaviour
     {
-        while (transform.childCount != 0)
-        {
-            foreach (Transform child in transform)
-            {
-                DestroyImmediate(child.gameObject);
-            }
-        }
+        public GameObject flagPrefab;
 
-        for (int x = (int)-transform.localScale.x / 2; x < (int)transform.localScale.x / 2; x += 5)
+
+
+        public void GenerateFlags()
         {
-            GameObject flag = Instantiate(flagPrefab, new Vector3(x, 0f, 0f), Quaternion.identity);
-            flag.transform.parent = transform;
-            GameObject dist = flag.transform.GetChild(2).gameObject;
-            TextMeshPro text = dist.GetComponent<TextMeshPro>();
-            text.SetText(x.ToString() + "m");
+            while (transform.childCount != 0)
+            {
+                foreach (Transform child in transform)
+                {
+                    DestroyImmediate(child.gameObject);
+                }
+            }
+
+            for (int x = (int)-transform.localScale.x / 2; x < (int)transform.localScale.x / 2; x += 5)
+            {
+                GameObject flag = Instantiate(flagPrefab, new Vector3(x, 0f, 0f), Quaternion.identity);
+                flag.transform.parent = transform;
+                GameObject dist = flag.transform.GetChild(2).gameObject;
+                TextMeshPro text = dist.GetComponent<TextMeshPro>();
+                text.SetText(x.ToString() + "m");
+            }
         }
     }
 }

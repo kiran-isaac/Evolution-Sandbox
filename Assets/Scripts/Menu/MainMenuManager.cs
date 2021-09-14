@@ -1,46 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.IO;
 
-public class MainMenuManager : MonoBehaviour
+namespace Menu
 {
-    public bool newSim;
-    public int saveSlot;
-
-    public GameObject confirmPanel;
-
-    public void OnNewSimulation()
+    public class MainMenuManager : MonoBehaviour
     {
-        PlayerPrefs.SetInt("newSim", 1);
-        newSim = true;
-    }
+        public bool newSim;
+        public int saveSlot;
 
-    public void OnLoadSimulation()
-    {
-        PlayerPrefs.SetInt("newSim", 0);
-        newSim = false;
-    }
+        public GameObject confirmPanel;
 
-    public void OnConfirm()
-    {
-        SceneManager.LoadScene("TerrainEditor");
-    }
-
-    public void OnSlot(int i)
-    {
-        PlayerPrefs.SetInt("SaveSlot", i);
-        saveSlot = i;
-
-        if (newSim && 
-            File.Exists(Application.persistentDataPath + "/Terrain Saves/saveslot" + saveSlot.ToString() + ".trn"))
+        public void OnNewSimulation()
         {
-            confirmPanel.SetActive(true);
+            PlayerPrefs.SetInt("newSim", 1);
+            newSim = true;
         }
-        else
+
+        public void OnLoadSimulation()
+        {
+            PlayerPrefs.SetInt("newSim", 0);
+            newSim = false;
+        }
+
+        public void OnConfirm()
         {
             SceneManager.LoadScene("TerrainEditor");
+        }
+
+        public void OnSlot(int i)
+        {
+            PlayerPrefs.SetInt("SaveSlot", i);
+            saveSlot = i;
+
+            if (newSim && 
+                File.Exists(Application.persistentDataPath + "/Terrain Saves/saveslot" + saveSlot.ToString() + ".trn"))
+            {
+                confirmPanel.SetActive(true);
+            }
+            else
+            {
+                SceneManager.LoadScene("TerrainEditor");
+            }
         }
     }
 }

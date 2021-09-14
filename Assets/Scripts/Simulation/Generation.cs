@@ -1,11 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Simulation.Creatures;
 
-[Serializable]
-public class Generation
+namespace Simulation
 {
-    Creature[] creatures = new Creature[10];
+    [Serializable]
+    public class Generation
+    {
+        Creature[] creatures = new Creature[10];
 
-    int n = 10;
+        int n = 10;
+    }
 }

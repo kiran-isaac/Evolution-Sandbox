@@ -1,15 +1,17 @@
-using UnityEngine;
-using System.Collections;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using Simulation.Creatures;
 
-[System.Serializable]
-public class SimSave
+namespace Simulation
 {
-    List<List<SaveNode>> creatures = new List<List<SaveNode>>();
-
-    public void AddCreature(Creature creature)
+    [System.Serializable]
+    public class SimSave
     {
-        creatures.Add((from node in creature.nodes select node.saveForm).ToList());
+        List<List<SaveNode>> creatures = new List<List<SaveNode>>();
+
+        public void AddCreature(Creature creature)
+        {
+            creatures.Add((from node in creature.nodes select node.saveForm).ToList());
+        }
     }
 }

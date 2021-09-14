@@ -1,27 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SimObstacle : MonoBehaviour
+namespace Simulation
 {
-    public Texture2D moveCursor;
-
-    public int typeCode;
-
-    public SimTerrain terrainManager;
-
-
-    private void Awake()
+    public class SimObstacle : MonoBehaviour
     {
-        terrainManager = GameObject.Find("Ground").GetComponent<SimTerrain>();
-    }
+        public Texture2D moveCursor;
 
-    public void UpdatePosAndAngle(float x)
-    {
-        float angle = terrainManager.GetAngleAtPoint(x) - 90;
+        public int typeCode;
 
-        Vector3 newPos = new Vector3(x, terrainManager.GetHeightAtPoint(x), 5);
-        transform.position = newPos;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        public SimTerrain terrainManager;
+
+
+        private void Awake()
+        {
+            terrainManager = GameObject.Find("Ground").GetComponent<SimTerrain>();
+        }
+
+        public void UpdatePosAndAngle(float x)
+        {
+            float angle = terrainManager.GetAngleAtPoint(x) - 90;
+
+            Vector3 newPos = new Vector3(x, terrainManager.GetHeightAtPoint(x), 5);
+            transform.position = newPos;
+            transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        }
     }
 }

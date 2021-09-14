@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SimUIManager : MonoBehaviour
+namespace Simulation
 {
-    public void OnBack()
+    public class SimUIManager : MonoBehaviour
     {
-        PlayerPrefs.SetInt("newSim", 0);
-        SceneManager.LoadScene("TerrainEditor");
+        public void OnBack()
+        {
+            PlayerPrefs.SetInt("newSim", 0);
+            SceneManager.LoadScene("TerrainEditor");
+        }
     }
 }

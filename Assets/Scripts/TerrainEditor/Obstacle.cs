@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
     public int typeCode;
-
     public TerrainEditor terrainEditor;
 
     private void Awake()
