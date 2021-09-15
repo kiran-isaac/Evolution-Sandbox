@@ -23,7 +23,9 @@ public class TerrainEditor : MonoBehaviour
 
     public void AddObstacle(int typeCode)
     {
-        GameObject newObstacle = Instantiate(terrain.obstaclePrefabs[typeCode], Camera.main.transform.position, Quaternion.identity, terrain.obstaclesTransform);
+        GameObject obstacleEditor = new GameObject().AddComponent<ObstacleEditor>().gameObject;
+        obstacleEditor.transform.parent = terrain.obstaclesTransform;
+        GameObject newObstacle = Instantiate(terrain.obstaclePrefabs[typeCode], Camera.main.transform.position, Quaternion.identity, obstacleEditor.transform);
         Obstacle obstacle = newObstacle.AddComponent<Obstacle>();
         obstacle.typeCode = typeCode;
         terrain.AddObstacle(obstacle);

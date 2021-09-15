@@ -7,7 +7,7 @@ public class ObstacleEditor : Obstacle
 
     private void Start()
     {
-        _terrainEditor = GameObject.Find("Terrain").GetComponent<TerrainEditor>();
+        _terrainEditor = GameObject.Find("TerrainEditor").GetComponent<TerrainEditor>();
     }
 
     private void OnMouseDrag()

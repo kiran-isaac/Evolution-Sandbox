@@ -7,7 +7,7 @@ public class Obstacle : MonoBehaviour
 
     private void Awake()
     {
-        terrain = GameObject.Find("Terrain").GetComponent<TerrainEditor>().terrain;
+        terrain = GameObject.Find("Terrain").GetComponent<Terrain>();
     }
 
     private void OnMouseExit()
