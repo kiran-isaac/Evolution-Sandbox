@@ -3,11 +3,11 @@
 public class Obstacle : MonoBehaviour
 {
     public int typeCode;
-    public TerrainSim terrain;
+    public TerrainBase terrain;
 
     private void Awake()
     {
-        terrain = GameObject.Find("Terrain").GetComponent<TerrainSim>();
+        terrain = GameObject.Find("Terrain").GetComponent<TerrainBase>();
     }
 
     private void OnMouseExit()

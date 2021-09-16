@@ -10,7 +10,7 @@ public class CameraControls : MonoBehaviour
 
     void Start()
     {
-        groundSize = GameObject.Find("Terrain").GetComponent<TerrainSim>().groundSize;
+        groundSize = GameObject.Find("Terrain").GetComponent<TerrainBase>().groundSize;
     }
 
     void Update()

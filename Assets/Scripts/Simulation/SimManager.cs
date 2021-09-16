@@ -7,7 +7,7 @@ public class SimManager : MonoBehaviour
     public GameObject nodePrefab;
     public GameObject musclePrefab;
 
-    public TerrainSim ground;
+    public TerrainBase ground;
 
     public int n;
     public int m;

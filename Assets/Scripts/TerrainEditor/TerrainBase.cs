@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class TerrainSim : MonoBehaviour
+public class TerrainBase : MonoBehaviour
 {
     public int groundSize = 10;
     int groundRes = 2;
+
+    protected bool isEditor = false;
     
     Vector3[] vertices;
     int[] triangles;
@@ -17,21 +19,22 @@ public class TerrainSim : MonoBehaviour
     public GameObject[] obstaclePrefabs;
     
     public Transform obstaclesTransform;
-    public GameObject vertPrefab;
 
     protected List<Obstacle> obstacles = new List<Obstacle>();
-    
+
+    public GameObject vertPrefab;
+
     TerrainSaveData saveData;
     int saveSlot = 1;
 
-    private void Start()
+    protected void Init()
     {
         saveSlot = PlayerPrefs.GetInt("SaveSlot");
         col = GetComponent<EdgeCollider2D>();
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
     }
-    
+
     // Saves this object to the slot denoted by the saveSlot
     public void Save()
     {
@@ -205,7 +208,8 @@ public class TerrainSim : MonoBehaviour
                 Debug.Log(j);
             }
 
-            if (i != 0 && i != groundSize)
+
+            if (i != 0 && i != groundSize && isEditor)
             {
                 // Creates the vertex 
                 var newVert = Instantiate(vertPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);

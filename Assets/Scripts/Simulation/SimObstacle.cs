@@ -8,12 +8,12 @@ namespace Simulation
 
         public int typeCode;
 
-        public SimTerrain terrainManager;
+        public TerrainSim terrainManager;
 
 
         private void Awake()
         {
-            terrainManager = GameObject.Find("Ground").GetComponent<SimTerrain>();
+            terrainManager = GameObject.Find("Ground").GetComponent<TerrainSim>();
         }
 
         public void UpdatePosAndAngle(float x)

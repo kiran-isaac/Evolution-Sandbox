@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TerrainEditor : TerrainSim
+public class TerrainEditor : TerrainBase
 {
     [HideInInspector]
     public string editMode = "Move";
@@ -9,9 +9,9 @@ public class TerrainEditor : TerrainSim
 
     private void Start()
     {
-        col = GetComponent<EdgeCollider2D>();
-        mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = mesh;
+        isEditor = true;
+
+        Init();
 
         newSim = PlayerPrefs.GetInt("newSim") == 1;
 

@@ -156,7 +156,7 @@ MonoBehaviour:
     type: 3}
   musclePrefab: {fileID: 7810309262878636361, guid: 12bac027f84afd5409d4d210c2a9f025,
     type: 3}
-  ground: {fileID: 4969609963760952565}
+  ground: {fileID: 0}
   n: 3
   m: 3
 --- !u!4 &103790797
@@ -897,7 +897,7 @@ GameObject:
   - component: {fileID: 4969609963760952555}
   - component: {fileID: 4969609963760952565}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -912,15 +912,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4969609963760952564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1127c720d64d8143afdf3e0c092da23, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e2130e9ab064f0a8eeb63869130f5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockPrefab: {fileID: 5277333803065729135, guid: 252e11d803367dd4884378330adef588,
-    type: 3}
-  spikePrefab: {fileID: 4241389917209744276, guid: fbefcef8eeeb79945b018d0c3150b6bf,
-    type: 3}
+  groundSize: 10
+  obstaclePrefabs:
+  - {fileID: 5277333803065729135, guid: 252e11d803367dd4884378330adef588, type: 3}
+  - {fileID: 4241389917209744276, guid: fbefcef8eeeb79945b018d0c3150b6bf, type: 3}
   obstaclesTransform: {fileID: 1397086306}
-  flagPrefab: {fileID: 8232990610520233581, guid: c5585f28bf73cd2429795a979bbf8683,
+  vertPrefab: {fileID: 7905428080526273143, guid: bc811ee051a1daf40a129e2d51993792,
     type: 3}
 --- !u!23 &4969609963760952566
 MeshRenderer:
