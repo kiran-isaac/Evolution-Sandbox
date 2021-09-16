@@ -1938,7 +1938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b19eb693c7ceb4f9adfb22de33aeff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundSize: 5000
+  groundSize: 10
   obstaclePrefabs:
   - {fileID: 5277333803065729135, guid: 252e11d803367dd4884378330adef588, type: 3}
   - {fileID: 4241389917209744276, guid: fbefcef8eeeb79945b018d0c3150b6bf, type: 3}

@@ -23,6 +23,11 @@ namespace Menu
             newSim = false;
         }
 
+        public void Quit()
+        {
+            Application.Quit();
+        }
+
         public void OnConfirm()
         {
             SceneManager.LoadScene("TerrainEditor");
