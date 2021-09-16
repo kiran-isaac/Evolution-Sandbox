@@ -7,35 +7,40 @@ public class SimManager : MonoBehaviour
     public GameObject nodePrefab;
     public GameObject musclePrefab;
 
-    public TerrainBase ground;
+    public TerrainSim terrain;
 
     public int n;
     public int m;
 
-    public void GenerateTestCreature()
+    private void Start()
     {
-        Creature.Generate(n, m, nodePrefab, musclePrefab, ground.GetHeightAtPoint(0) + 6);
+        Creature.Generate(n, m, nodePrefab, musclePrefab, new Vector3(-2, terrain.GetHeightAtPoint(0) + 6));
     }
 
-    private void OnValidate()
-    {
-        n = Mathf.Max(Mathf.Min(n, 10), 2);
-        m = Mathf.Min(Mathf.Max(m, n - 1), (n * (n - 1)) / 2);
-    }
+    //public void GenerateTestCreature()
+    //{
+    //    Creature.Generate(n, m, nodePrefab, musclePrefab, ground.GetHeightAtPoint(0) + 6);
+    //}
+
+    //private void OnValidate()
+    //{
+    //    n = Mathf.Max(Mathf.Min(n, 10), 2);
+    //    m = Mathf.Min(Mathf.Max(m, n - 1), (n * (n - 1)) / 2);
+    //}
 }
 
-[CustomEditor(typeof(SimManager))]
-class SimEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
+//[CustomEditor(typeof(SimManager))]
+//class SimEditor : Editor
+//{
+//    public override void OnInspectorGUI()
+//    {
+//        DrawDefaultInspector();
 
-        SimManager simManager = (SimManager)target;
+//        SimManager simManager = (SimManager)target;
 
-        if (GUILayout.Button("Generate Test Creature"))
-        {
-            simManager.GenerateTestCreature();
-        }
-    }
-}
+//        if (GUILayout.Button("Generate Test Creature"))
+//        {
+//            simManager.GenerateTestCreature();
+//        }
+//    }
+//}

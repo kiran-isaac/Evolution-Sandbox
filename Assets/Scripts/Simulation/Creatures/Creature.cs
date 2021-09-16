@@ -5,6 +5,8 @@ namespace Simulation.Creatures
 {
     public class Creature : MonoBehaviour
     {
+        public Genome genome;
+
         static SimSave simSave = new SimSave();
 
         public List<Node> nodes;
@@ -110,7 +112,7 @@ namespace Simulation.Creatures
             }
         }
 
-        public static Creature Generate(int n, int m, GameObject nodePrefab, GameObject musclePrefab, float height)
+        public static Creature Generate(int n, int m, GameObject nodePrefab, GameObject musclePrefab, Vector3 pos)
         {
             Creature creature = new GameObject("Creature").AddComponent<Creature>();
             creature.gameObject.transform.parent = GameObject.Find("SimulationManager").transform;
@@ -124,9 +126,17 @@ namespace Simulation.Creatures
                 node.GenerateSaveFormat();
             }
 
-            creature.transform.position = new Vector3(0, height, 0);
+            creature.transform.position = pos;
 
             return creature;
         }
+    }
+
+    public struct Genome
+    {
+        public int n;
+        public int m;
+
+        public 
     }
 }

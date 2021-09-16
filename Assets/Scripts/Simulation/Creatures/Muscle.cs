@@ -12,7 +12,7 @@ namespace Simulation.Creatures
 
         bool connected = false;
 
-        SpringJoint2D joint;
+        DistanceJoint2D joint;
 
         float currentScale;
 
@@ -33,10 +33,8 @@ namespace Simulation.Creatures
             n1Script.connections.Add(n2Script);
             n2Script.connections.Add(n1Script);
 
-            joint = n1.AddComponent<SpringJoint2D>();
+            joint = n1.AddComponent<DistanceJoint2D>();
             joint.connectedBody = n2.GetComponent<Rigidbody2D>();
-            joint.autoConfigureDistance = false;
-            joint.frequency = 0;
 
             connected = true;
 
@@ -71,7 +69,7 @@ namespace Simulation.Creatures
         {
             if (connected)
             {
-                t += Time.deltaTime;
+                t += Time.deltaTime * 5;
                 UpdateXScale(t);
                 transform.localScale = new Vector3(currentScale, transform.localScale.y, transform.localScale.z);
                 UpdateJointLength();
