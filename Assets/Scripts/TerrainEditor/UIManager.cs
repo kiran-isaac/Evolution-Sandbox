@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -29,7 +27,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        terrainEditor = GameObject.Find("TerrainEditor").GetComponent<TerrainEditor>();
+        terrainEditor = GameObject.Find("Terrain").GetComponent<TerrainEditor>();
 
         terrainEditor.editMode = "Move";
 
@@ -54,7 +52,7 @@ public class UIManager : MonoBehaviour
 
     public void Back()
     {
-        terrainEditor.terrain.Save();
+        terrainEditor.Save();
         SceneManager.LoadScene("Menu");
     }
 

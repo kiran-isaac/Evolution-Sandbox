@@ -6,6 +6,13 @@ public class CameraControls : MonoBehaviour
 
     readonly float vel = 0.02f;
 
+    int groundSize;
+
+    void Start()
+    {
+        groundSize = GameObject.Find("Terrain").GetComponent<TerrainSim>().groundSize;
+    }
+
     void Update()
     {
         Pan();
@@ -25,7 +32,7 @@ public class CameraControls : MonoBehaviour
             transform.Translate(-new Vector3(delta.x * vel, delta.y * vel));
 
             // Makes it so the camera can't go below 0 or above 100
-            transform.position = new Vector3(transform.position.x, 
+            transform.position = new Vector3(Mathf.Max(Mathf.Min(transform.position.x, groundSize), 0),
                 Mathf.Min(Mathf.Max(-1, transform.position.y), 100), -10);
 
             lastPosition = newPos;

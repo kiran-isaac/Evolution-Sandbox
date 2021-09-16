@@ -1,40 +1,48 @@
 ﻿using UnityEngine;
 
-public class TerrainEditor : MonoBehaviour
+public class TerrainEditor : TerrainSim
 {
-    public Terrain terrain;
-
     [HideInInspector]
     public string editMode = "Move";
 
-    bool _newSim = false;
+    bool newSim = false;
 
     private void Start()
     {
-        _newSim = PlayerPrefs.GetInt("newSim") == 1;
+        col = GetComponent<EdgeCollider2D>();
+        mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = mesh;
 
-        if (_newSim)
+        newSim = PlayerPrefs.GetInt("newSim") == 1;
+
+        if (newSim)
         {
-            terrain.SaveDefaultMesh();
+            SaveDefaultMesh();
         }
 
-        terrain.LoadTerrain();
+        LoadTerrain();
+    }
+
+    protected override void LoadObstacle(int typeCode, float x)
+    {
+        var newObstacle = Instantiate(obstaclePrefabs[typeCode], new Vector3(x, 0, 5), Quaternion.identity, obstaclesTransform);
+        var script = newObstacle.AddComponent<ObstacleEditor>();
+        script.typeCode = typeCode;
+        obstacles.Add(script);
     }
 
     public void AddObstacle(int typeCode)
     {
-        GameObject obstacleEditor = new GameObject().AddComponent<ObstacleEditor>().gameObject;
-        obstacleEditor.transform.parent = terrain.obstaclesTransform;
-        GameObject newObstacle = Instantiate(terrain.obstaclePrefabs[typeCode], Camera.main.transform.position, Quaternion.identity, obstacleEditor.transform);
-        Obstacle obstacle = newObstacle.AddComponent<Obstacle>();
+        GameObject newObstacle = Instantiate(obstaclePrefabs[typeCode], Camera.main.transform.position, Quaternion.identity, obstaclesTransform);
+        ObstacleEditor obstacle = newObstacle.AddComponent<ObstacleEditor>();
         obstacle.typeCode = typeCode;
-        terrain.AddObstacle(obstacle);
+        AddObstacle(obstacle);
     }
     
     public void DeleteObstacle(Obstacle obstacle)
     {
-        terrain.RemoveObstacle(obstacle);
+        RemoveObstacle(obstacle);
         Destroy(obstacle.gameObject);
-        terrain.Save();
+        Save();
     }
 }

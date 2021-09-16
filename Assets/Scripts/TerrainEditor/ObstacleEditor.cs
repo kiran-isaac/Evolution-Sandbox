@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class ObstacleEditor : Obstacle
 {
-    private TerrainEditor _terrainEditor;
+    private TerrainEditor terrainEditor;
 
     private void Start()
     {
-        _terrainEditor = GameObject.Find("TerrainEditor").GetComponent<TerrainEditor>();
+        terrainEditor = GameObject.Find("Terrain").GetComponent<TerrainEditor>();
     }
 
     private void OnMouseDrag()
     {
-        if (_terrainEditor.editMode == "Move")
+        if (terrainEditor.editMode == "Move")
         {
             Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            UpdatePosAndAngle();
+            UpdatePosAndAngle(Mathf.Max(Mathf.Min(newPos.x, terrainEditor.groundSize - 1), 1));
         }
     }
 
@@ -26,9 +26,9 @@ public class ObstacleEditor : Obstacle
 
     private void OnMouseDown()
     {
-        if (_terrainEditor.editMode == "Delete")
+        if (terrainEditor.editMode == "Delete")
         {
-            _terrainEditor.DeleteObstacle(this);
+            terrainEditor.DeleteObstacle(this);
         }
     }
 }

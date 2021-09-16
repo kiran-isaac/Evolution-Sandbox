@@ -3,11 +3,11 @@
 public class Obstacle : MonoBehaviour
 {
     public int typeCode;
-    public Terrain terrain;
+    public TerrainSim terrain;
 
     private void Awake()
     {
-        terrain = GameObject.Find("Terrain").GetComponent<Terrain>();
+        terrain = GameObject.Find("Terrain").GetComponent<TerrainSim>();
     }
 
     private void OnMouseExit()
@@ -15,14 +15,18 @@ public class Obstacle : MonoBehaviour
         Cursor.SetCursor(null, Vector2.zero, CursorMode.ForceSoftware);
     }
 
-    public void UpdatePosAndAngle()
+    public void UpdatePosAndAngle(float x = float.NaN)
     {
-        float x = transform.position.x;
+        if (float.IsNaN(x))
+        {
+            x = transform.position.x;
+        }
         
-        float angle = terrain.GetAngleAtPoint(x) - 90;
+        
+        float angle = terrain.GetAngleAtPoint(x);
 
-        Vector3 newPos = new Vector3(x, terrain.GetHeightAtPoint(x), 5f);
+        Vector3 newPos = new Vector3(x, terrain.GetHeightAtPoint(x) - 0.01f, 5f);
         transform.position = newPos;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
     }
 }

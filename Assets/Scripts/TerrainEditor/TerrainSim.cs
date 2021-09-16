@@ -4,32 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class Terrain : MonoBehaviour
+public class TerrainSim : MonoBehaviour
 {
-    int groundSize = 10000;
+    public int groundSize = 10;
     int groundRes = 2;
     
-    private Vector3[] _vertices;
-    private int[] _triangles;
-    Mesh _mesh;
-    EdgeCollider2D _col;
+    Vector3[] vertices;
+    int[] triangles;
+    protected Mesh mesh;
+    protected EdgeCollider2D col;
     
     public GameObject[] obstaclePrefabs;
     
     public Transform obstaclesTransform;
     public GameObject vertPrefab;
 
-    private List<Obstacle> obstacles = new List<Obstacle>();
+    protected List<Obstacle> obstacles = new List<Obstacle>();
     
-    public TerrainSaveData saveData;
-    private int _saveSlot = 1;
+    TerrainSaveData saveData;
+    int saveSlot = 1;
 
     private void Start()
     {
-        _saveSlot = PlayerPrefs.GetInt("SaveSlot");
-        _col = GetComponent<EdgeCollider2D>();
-        _mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = _mesh;
+        saveSlot = PlayerPrefs.GetInt("SaveSlot");
+        col = GetComponent<EdgeCollider2D>();
+        mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = mesh;
     }
     
     // Saves this object to the slot denoted by the saveSlot
@@ -39,32 +39,38 @@ public class Terrain : MonoBehaviour
         UpdateObstacles();
 
         // Saves the data
-        SerializationManager.Save("/Terrain Saves", "saveslot" + _saveSlot.ToString() + ".trn", saveData);
+        SerializationManager.Save("/Terrain Saves", "saveslot" + saveSlot.ToString() + ".trn", saveData);
     }
 
     // Creates the default mesh for the ground
     public void SaveDefaultMesh()
     {
         // The temporary lists are converted back into arrays
-        _vertices = HeightsToVerts(Enumerable.Repeat(1.0f, groundSize / groundRes + 1).ToArray());
+        vertices = HeightsToVerts(Enumerable.Repeat(1.0f, groundSize / groundRes + 1).ToArray());
         Save();
     }
     
+    protected virtual void LoadObstacle(int typeCode, float x)
+    {
+        
+        var newObstacle = Instantiate(obstaclePrefabs[typeCode], new Vector3(x, 0, 5), Quaternion.identity, obstaclesTransform);
+        var script = newObstacle.AddComponent<Obstacle>();
+        script.typeCode = typeCode;
+        obstacles.Add(script);
+    }
+
     public void LoadTerrain()
     {
-        TerrainSaveData data = (TerrainSaveData)SerializationManager.Load("/Terrain Saves/saveslot" + _saveSlot.ToString() + ".trn");
+        TerrainSaveData data = (TerrainSaveData)SerializationManager.Load("/Terrain Saves/saveslot" + saveSlot.ToString() + ".trn");
 
-        _vertices = HeightsToVerts(data.points);
+        vertices = HeightsToVerts(data.points);
 
         var loadObstacles = data.obstacles;
         for (var i = 0; i < loadObstacles.Length; i += 2)
         {
             var typeCode = (int)loadObstacles[i];
             var x = loadObstacles[i + 1];
-            var newObstacle = Instantiate(obstaclePrefabs[typeCode], new Vector3(x, 0, 5), Quaternion.identity, obstaclesTransform);
-            var script = newObstacle.AddComponent<Obstacle>();
-            script.typeCode = typeCode;
-            obstacles.Add(script);
+            LoadObstacle(typeCode, x);
         }
 
         AddTriangles();
@@ -113,12 +119,12 @@ public class Terrain : MonoBehaviour
 
         var topEdgeVerts = new List<Vector2>();
 
-        for (int i = 0; i < _vertices.Length; i += 2)
+        for (int i = 0; i < vertices.Length; i += 2)
         {
-            topEdgeVerts.Add(new Vector2(_vertices[i].x, _vertices[i].y));
+            topEdgeVerts.Add(new Vector2(vertices[i].x, vertices[i].y));
         }
 
-        _col.points = topEdgeVerts.ToArray();
+        col.points = topEdgeVerts.ToArray();
     }
     
     public void UpdatePoint(int i, Vector3 newPoint)
@@ -127,7 +133,7 @@ public class Terrain : MonoBehaviour
         newPoint = transform.InverseTransformPoint(newPoint);
 
         // Changes the point
-        _vertices[i] = newPoint;
+        vertices[i] = newPoint;
 
         UpdateMesh();
 
@@ -138,15 +144,15 @@ public class Terrain : MonoBehaviour
     // Updates the mesh with the new vertices and triangles
     private void UpdateMesh()
     {
-        _mesh.Clear();
-        _mesh.vertices = _vertices;
-        _mesh.triangles = _triangles;
+        mesh.Clear();
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
     }
     
     private void AddTriangles()
     {
         List<int> tempTriangles = new List<int>();
-        for (int i = 0; i < _vertices.Length - 2; i += 2)
+        for (int i = 0; i < vertices.Length - 2; i += 2)
         {
             tempTriangles.Add(i + 0);
             tempTriangles.Add(i + 2);
@@ -156,14 +162,14 @@ public class Terrain : MonoBehaviour
             tempTriangles.Add(i + 3);
         }
 
-        _triangles = tempTriangles.ToArray();
+        triangles = tempTriangles.ToArray();
     }
 
     private float[] VertsToHeights()
     {
         var heights = new List<float>();
 
-        foreach (Vector3 vert in _vertices)
+        foreach (Vector3 vert in vertices)
         {
             if (Math.Abs(vert.y - (-1)) < 0.001)
             {
@@ -187,7 +193,7 @@ public class Terrain : MonoBehaviour
         }
 
         var j = 0;
-        for (var i = -groundSize / 2; i <= groundSize / 2; i += groundRes)
+        for (var i = 0; i <= groundSize; i += groundRes)
         {
             try
             {
@@ -199,13 +205,16 @@ public class Terrain : MonoBehaviour
                 Debug.Log(j);
             }
 
-            // Creates the vertex 
-            var newVert = Instantiate(vertPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
-            newVert.transform.position = new Vector3(i, heights[j] + transform.position.y, 0);
-            var newVertScript = newVert.GetComponent<Vert>();
-            newVertScript.pointLockIndex = tempVertices.Count - 1;
-            newVertScript.terrain = this;
-
+            if (i != 0 && i != groundSize)
+            {
+                // Creates the vertex 
+                var newVert = Instantiate(vertPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
+                newVert.transform.position = new Vector3(i, heights[j] + transform.position.y, 0);
+                var newVertScript = newVert.GetComponent<Vert>();
+                newVertScript.pointLockIndex = tempVertices.Count - 1;
+                newVertScript.terrain = this;
+            }
+            
             tempVertices.Add(new Vector3(i, -1));
 
             j++;
