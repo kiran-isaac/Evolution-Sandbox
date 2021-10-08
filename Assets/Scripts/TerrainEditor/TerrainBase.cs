@@ -6,7 +6,7 @@ using System.Linq;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class TerrainBase : MonoBehaviour
 {
-    public int groundSize = 10;
+    public int groundSize = 100;
     int groundRes = 2;
 
     protected bool isEditor = false;
